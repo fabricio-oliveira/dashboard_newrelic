@@ -1,15 +1,22 @@
-
 # frozen_string_literal: true
 
 Dashing.scheduler.every '10s' do
-  Dashing.send_event('last-version', title: 'Last Version Fota', text: 'teste')
+  release = last_version
+  status = status_version release.version
+  msg = "#{release['model']} - #{release['version']}"
+  Dashing.send_event('last-version', title: 'Last Version Fota', status: status,
+                                     text: msg)
 end
 
-def get_last_version
+def last_version
   response = HTTParty.get('http://localhost:8080/api/v1/release/last')
-  return 'Nenhuma release cadastrada :(' if response.code == :no_content
-  values = JSON.parse response.body
-  "#{values['model']} - #{values['version']}"
+  return { 'model': nil, 'version': nil } if response.code == :no_content
+  JSON.parse response.body
+end
+
+def status_version(version)
+  data_version = "#{version[0..3]}-#{version[4..5]}-#{version[6..7]}".to_date
+  data_version == Date.today ? 'OK' : 'FAIL'
 end
 
 # current_valuation = 0
@@ -18,7 +25,8 @@ end
 #   last_valuation = current_valuation
 #   current_valuation = rand(10)
 #
-#   Dashing.send_event('valuation', { current: current_valuation, last: last_valuation })
+#   Dashing.send_event('valuation', { current: current_valuation,
+#                                     last: last_valuation })
 #   Dashing.send_event('synergy',   { value: rand(10) })
 #   Dashing.send_event('welcome',   { title: 't1', text: 't2'})
 # end
