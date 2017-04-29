@@ -20,6 +20,7 @@ gem 'httparty'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'rubocop'
 end
 
 group :development do

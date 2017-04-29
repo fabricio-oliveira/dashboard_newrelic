@@ -1,7 +1,7 @@
 class Dashing.ColorText extends Dashing.Text
 
   ready: ->
-   # @setColor('RUN')
+    @setColor('RUN')
     #Dashing.Text::ready.call @
     super
 
@@ -11,8 +11,8 @@ class Dashing.ColorText extends Dashing.Text
     # Handle incoming data
     # You can access the html node of this widget with `@node`
     # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
-    #@setColor(@get('status'))
-    #$(@node).fadeOut().fadeIn()
+    @setColor(@get('status'))
+    $(@node).fadeOut().fadeIn()
     # Dashing.Text::onData.call @
     super
 

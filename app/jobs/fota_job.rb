@@ -1,6 +1,7 @@
 
 Dashing.scheduler.every '10s' do
-  Dashing.send_event('last-version',   { title: 'Last Version Fota', text: 'get_last_versio' })
+  p 'teste'
+  Dashing.send_event('welcome',   { title: 'Last Version Fota', text: 'teste' })
 end
 
 def get_last_version
