@@ -1,16 +1,16 @@
 
+# frozen_string_literal: true
+
 Dashing.scheduler.every '10s' do
-  Dashing.send_event('last-version',   { title: 'Last Version Fota', text: 'teste' })
+  Dashing.send_event('last-version', title: 'Last Version Fota', text: 'teste')
 end
 
 def get_last_version
   response = HTTParty.get('http://localhost:8080/api/v1/release/last')
-  return "Nenhuma release cadastrada :(" if response.code == :no_content
+  return 'Nenhuma release cadastrada :(' if response.code == :no_content
   values = JSON.parse response.body
   "#{values['model']} - #{values['version']}"
 end
-
-
 
 # current_valuation = 0
 #
