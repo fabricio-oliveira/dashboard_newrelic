@@ -2,7 +2,7 @@
 
 Dashing.scheduler.every '10s' do
   release = last_version
-  status = status_version release.version
+  status = "RUN" #status_version release["version"].to_s
   msg = "#{release['model']} - #{release['version']}"
   Dashing.send_event('last-version', title: 'Last Version Fota', status: status,
                                      text: msg)
