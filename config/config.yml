@@ -1,0 +1,12 @@
+defaults: &defaults
+  fota_sand_box_uri_format: http://localhost:3000
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  fota_sand_box_uri_format: https://cielo-fota-sandbox.m4u.com.br
