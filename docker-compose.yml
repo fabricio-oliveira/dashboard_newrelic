@@ -1,11 +1,13 @@
-version: '3'
+version: '2'
 services:
   dashboard:
     build: .
-    command: rails s -b 0.0.0.0 -p 4000 -e development
+    command: rails s -b 0.0.0.0 -p 3000 -e production
     environment:
       - SECRET_KEY_BASE=AAAA
     ports:
-      - "4000:4000"
+      - "3000:3000"
+    links:
+      - redis:redis
   redis:
-    image: redis:last
+    image: redis

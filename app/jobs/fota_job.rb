@@ -2,29 +2,26 @@
 
 Dashing.scheduler.every '10s' do
   release = last_version
-  status = status_version release["version"].to_s
-  msg = "#{release['model']} - #{release['version']}"
+  status = status_version release[:version].to_s
+  msg = "#{release[:model]} - #{release[:version]}"
+  p msg, status
   Dashing.send_event('last-version', title: 'Last Version Fota', status: status,
                                      text: msg)
 end
 
-#
-# def last_version
-#   url = APP_CONFIG['fota_sand_box_uri_format']
-#   response = HTTParty.get("#{url}/api/v1/release/last")
-#   return { 'model': nil, 'version': nil } if response.code == :no_content
-#   JSON.parse response.body
-# end
+def last_version
+  url = APP_CONFIG['fota_sand_box_uri_format']
+  response = HTTParty.get("#{url}/api/v1/release/last")
+  return { 'model': nil, 'version': nil } if response.code == :no_content
+  map = JSON.parse response.body
+  map.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+end
 
 def status_version(version)
   data_version = "#{version[0..3]}-#{version[4..5]}-#{version[6..7]}".to_date
   data_version == Date.today ? 'OK' : 'FAIL'
 end
 
-def last_version
-  p Dashing.configure.redis_host
-  { model: "Q1", version: 2017010101 }
-end
 
 # current_valuation = 0
 #
