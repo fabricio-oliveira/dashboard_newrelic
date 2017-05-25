@@ -2,12 +2,14 @@ version: '2'
 services:
   dashboard:
     build: .
-    command: rails s -b 0.0.0.0 -p 3000 -e production
+    command: bash -c "rake assets:precompile; rails s -b 0.0.0.0 -p 3000 -e production"
     environment:
       - SECRET_KEY_BASE=AAAA
+      - RAILS_SERVE_STATIC_FILES=true
+      - SAND-BOX= 
     ports:
       - "3000:3000"
     links:
       - redis:redis
   redis:
-    image: redis
+    image: redis:latest

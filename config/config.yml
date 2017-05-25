@@ -9,4 +9,4 @@ test:
 
 production:
   <<: *defaults
-  fota_sand_box_uri_format: https://cielo-fota-sandbox.m4u.com.br
+  fota_sand_box_uri_format: ENV['SAND-BOX']
